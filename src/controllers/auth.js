@@ -19,6 +19,7 @@ exports.login = async(req,res,next)=>{
                 id:student._id,
                 email:student.email,
                 name:student.name,
+                image: student.image,
                 role:student.role
             }
             const token = jwt.sign(
@@ -30,7 +31,7 @@ exports.login = async(req,res,next)=>{
                 success:true,
                 message:'Login successful',
                 token,
-                role:student.role
+                role:student.role,
             })
         }
     }catch(error){
