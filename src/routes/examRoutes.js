@@ -11,7 +11,7 @@ const {isAdmin,All,} = require("../midelware/authorized");
 
 
 router.route("/exams")
-    .get(isAdmin,examController.getAllExams)
+    .get(All,examController.getAllExams)
     .post(isAdmin,createExamValidator,resultValdation,examController.createExams);
 
 router.route("/exams/:id")
@@ -19,6 +19,6 @@ router.route("/exams/:id")
 
 
 router.route("/exams/subject/:subjectId")
-    .get(isAdmin,examController.getExamsBySubjectId);
+    .get(All,examController.getExamsBySubjectId);
 
 module.exports = router;

@@ -1,4 +1,5 @@
-const Degree = require('../models/degreeShema'); // Adjust the path as necessary
+const Degree = require('../models/degreeShema'); 
+const mongoose = require('mongoose');
 
 // Create a new degree
 exports.createDegree = async (req, res, next) => {
@@ -41,6 +42,29 @@ exports.getDegreesByStudentId = async (req, res, next) => {
             return res.status(404).json({ message: 'No degrees found for this student' });
         }
         res.status(200).json({ data: degrees });
+    } catch (err) {
+        next(err);
+    }
+};
+
+
+exports.hasDegreeForExam = async (req, res, next) => {
+    try {
+        const { studentId, examId } = req.params;
+
+    
+        if (!mongoose.Types.ObjectId.isValid(studentId) || !mongoose.Types.ObjectId.isValid(examId)) {
+            return res.status(400).json({ message: 'Invalid studentId or examId' });
+        }
+
+        const degree = await Degree.findOne({ student: studentId, exam: examId });
+
+
+        if (!degree) {
+            return res.json({ hasDegree: false });
+        }
+
+        return res.json({ hasDegree: true });
     } catch (err) {
         next(err);
     }

@@ -68,7 +68,7 @@ exports.createStudent = async (req, res,next) => {
 //update Student
 exports.updateStudent = async (req, res,next) => {
     // update student by id
-    
+    console.log("update");
     try {
         const studentId = req.body.id;
         const updateFields = {};
@@ -76,8 +76,7 @@ exports.updateStudent = async (req, res,next) => {
         if(req.body.email){updateFields.email = req.body.email;}
         if(req.body.age){updateFields.age = req.body.age;}
         if(req.body.password){
-            updateFields.password = req.body.password;
-            let hashedPassword = await bcrypt.hash(password, 10);
+            let hashedPassword = await bcrypt.hash(req.body.password, 10);
             updateFields.password = hashedPassword;
         }
         if(req.file){

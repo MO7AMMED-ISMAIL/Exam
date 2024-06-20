@@ -10,7 +10,7 @@ exports.insertValidator = [
 
 
 exports.updateValidator = [
-    param("id").notEmpty().withMessage("Id is required"),
+    body("id").notEmpty().withMessage("Id is required"),
     body("name").notEmpty().withMessage("Name is required").optional(),
     body("email").notEmpty().withMessage("Email is required").optional().isEmail().withMessage("must be a valid email").optional(),
     body("password").notEmpty().withMessage("Password is required").optional().isLength({min:6}).withMessage("must be at least 6 chars long").optional(),

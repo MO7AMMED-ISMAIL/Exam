@@ -16,5 +16,6 @@ router.post('/degrees',All,createDegreeValidator,resultValdation,degreeControlle
 
 router.get('/degrees/student/:id',All,studentIdValidator,resultValdation,degreeController.getDegreesByStudentId);
 
+router.get('/degrees/:studentId/:examId',degreeController.hasDegreeForExam);
 
 module.exports = router;
