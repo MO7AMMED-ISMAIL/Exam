@@ -4,7 +4,8 @@ const examController = require("../controllers/examController")
 const resultValdation = require("../midelware/resultValidator");
 const {
     createExamValidator,
-    getExamByIdValidator
+    getExamByIdValidator,
+    updateExamValidator
 } = require("../midelware/exam/examValidator")
 
 const {isAdmin,All,} = require("../midelware/authorized");
@@ -15,7 +16,9 @@ router.route("/exams")
     .post(isAdmin,createExamValidator,resultValdation,examController.createExams);
 
 router.route("/exams/:id")
-    .get(All,getExamByIdValidator,resultValdation,examController.startExam);
+    .get(All,getExamByIdValidator,resultValdation,examController.startExam)
+    .put(isAdmin,updateExamValidator,resultValdation,examController.updateExam)
+    .delete(isAdmin,getExamByIdValidator,resultValdation,examController.deleteExam);
 
 
 router.route("/exams/subject/:subjectId")

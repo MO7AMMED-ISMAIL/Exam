@@ -12,9 +12,24 @@ const createExamValidator = [
     body('subject').isMongoId().withMessage('subject ID must be a valid MongoDB ID'),
 ];
 
+
+const updateExamValidator = [
+    body('examName').optional().isString().withMessage('Exam name must be a string'),
+    body('description').optional().isString().withMessage('Description must be a string'),
+    body('date').optional().isISO8601().withMessage('Date must be a valid date'),
+    body('duration').optional().isInt({ min: 1 }).withMessage('Duration must be an integer greater than 0'),
+    body('questions').optional().isArray({ min: 1 }).withMessage('Questions must be an array with at least one question'),
+    body('questions.*.questionText').optional().isString().withMessage('Question text must be a string'),
+    body('questions.*.options').optional().isArray({ min: 1 }).withMessage('Options must be an array with at least one option'),
+    body('questions.*.correctAnswer').optional().isString().withMessage('Correct answer must be a string'),
+    body('subject').optional().isMongoId().withMessage('subject ID must be a valid MongoDB ID'),
+];
+
 const getExamByIdValidator = [
     param('id').isMongoId().withMessage('Exam ID must be a valid MongoDB ID')
 ];
+
+
 
 const getExamsBySubjectIdValidator = [
     // Validation rules for getting exams by subject ID
@@ -24,7 +39,8 @@ const getExamsBySubjectIdValidator = [
 module.exports = {
     createExamValidator,
     getExamByIdValidator,
-    getExamsBySubjectIdValidator
+    getExamsBySubjectIdValidator,
+    updateExamValidator,
 };
 
 

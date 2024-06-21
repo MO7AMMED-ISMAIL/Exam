@@ -41,6 +41,35 @@ exports.getExamById = async (req, res, next) => {
     }
 };
 
+exports.updateExam = async (req, res, next) => {
+    try {
+        const examId = req.params.id;
+        const updates = req.body;
+
+        const existingExam = await Exam.findById(examId).populate('subject');
+
+        if (!existingExam) {
+            return res.status(404).json({ success: false, message: 'Exam not found' });
+        }
+
+        Object.keys(updates).forEach((key) => {
+            if (key !== 'questions') {  
+                existingExam[key] = updates[key];
+            }
+        });
+
+        if (updates.questions) {
+            existingExam.questions = updates.questions;
+        }
+
+        const updatedExam = await existingExam.save();
+
+        res.status(200).json({ success: true, data: updatedExam });
+    } catch (err) {
+        next(err);
+    }
+};
+
 exports.startExam = async (req, res, next) => {
     try {
         const exam = await Exam.findById(req.params.id).populate('subject');
@@ -79,4 +108,25 @@ exports.getExamsBySubjectId = async (req, res, next) => {
         next(err);
     }
 };
+
+exports.deleteExam = async (req, res, next) => {
+    try {
+        const deletedExam = await Exam.findByIdAndDelete(req.params.id);
+        if (!deletedExam) {
+            return res.status(404).json({ success: false, message: 'Exam not found' });
+        }
+        res.status(200).json({ success: true, message: 'Exam deleted successfully' });
+    } catch (err) {
+        next(err);
+    }
+};
+
+
+
+
+
+
+
+
+
 
