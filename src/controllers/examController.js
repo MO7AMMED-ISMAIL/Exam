@@ -43,7 +43,7 @@ exports.getExamById = async (req, res, next) => {
 
 exports.startExam = async (req, res, next) => {
     try {
-        const exam = await Exam.findById(req.params.id);
+        const exam = await Exam.findById(req.params.id).populate('subject');
         if (!exam) {
             return res.status(404).json({ message: 'Exam not found' });
         }
