@@ -20,6 +20,8 @@ router.route("/exams/:id")
     .put(isAdmin,updateExamValidator,resultValdation,examController.updateExam)
     .delete(isAdmin,getExamByIdValidator,resultValdation,examController.deleteExam);
 
+router.route("/examsById/:id")
+    .get(All,getExamByIdValidator,resultValdation,examController.getExamById);
 
 router.route("/exams/subject/:subjectId")
     .get(All,examController.getExamsBySubjectId);
